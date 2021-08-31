@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import './App.css'
+import React, { useState } from 'react'
+import Searchbar from './components/SearchBar'
+import Result from './components/Result'
+import { createTheme, ThemeProvider, Container } from '@material-ui/core'
+function App () {
+  const [query, setQuery] = useState('0')
+  const onQueryChange = (val) => {
+    setQuery(val)
+  }
+  const theme = createTheme({
+    status: {
+      danger: '#e53e3e'
+    },
+    palette: {
+      neutral: {
+        main: '#5c6ac4'
+      },
+      background: '#5BBF3F'
+    }
+  })
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider theme={theme}>
+        <Container>
+          {/* Query selector */}
+          <Searchbar onQueryChange={onQueryChange} number={query} />
+          {/* Data table */}
+          <Result query={query} />
+        </Container>
+      </ThemeProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
